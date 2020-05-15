@@ -8,4 +8,4 @@ const LandingPage = () => {
   return <CompanySearch />;
 };
 
-export default withApollo(LandingPage);
+export default withApollo({ssr: true})(LandingPage);
