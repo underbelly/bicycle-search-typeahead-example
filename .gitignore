@@ -16,3 +16,12 @@ typings/
 .next
 dist
 
+/server/bicycle_search/_build/
+/server/bicycle_search/cover/
+/server/bicycle_search/deps/
+/server/bicycle_search/doc/
+/server/bicycle_search/.fetch
+/server/bicycle_search/erl_crash.dump
+/server/bicycle_search/*.ez
+/server/bicycle_search/bicycle_search-*.tar
+/server/bicycle_search/priv/static/
