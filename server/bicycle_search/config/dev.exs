@@ -3,7 +3,7 @@ use Mix.Config
 # Configure your database
 config :bicycle_search, BicycleSearch.Repo,
   username: "postgres",
-  password: "postgres",
+  password: "local-database",
   database: "bicycle_search_dev",
   hostname: "localhost",
   show_sensitive_data_on_connection_error: true,

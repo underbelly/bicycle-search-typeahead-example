@@ -44,7 +44,8 @@ defmodule BicycleSearch.MixProject do
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
       {:absinthe, "~> 1.5.0"},
-      {:absinthe_phoenix, "~> 2.0.0"}
+      {:absinthe_phoenix, "~> 2.0.0"},
+      {:cors_plug, "~> 2.0"},
     ]
   end
 
