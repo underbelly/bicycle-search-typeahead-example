@@ -1,19 +1,24 @@
-import {useState} from 'react';
+import * as React from 'react';
+import {useLazyQuery} from '@apollo/react-hooks';
+import debounce from 'lodash/debounce';
 
 import TypeaheadInput, {Option} from '@components/TypeaheadInput';
 import {Box, Title, Subtitle, GradientBackground, Container} from './styles';
+import {GET_BIKES} from '@utils/queries';
 
-const fakeOptions: Array<Option> = [
-  {label: 'Bianchi', value: 'Bianchi'},
-  {label: 'Cinelli', value: 'Cinelli'},
-  {label: 'Specialized', value: 'Specialized'},
-  {label: 'Trek', value: 'Trek'},
-  {label: 'Surly', value: 'Surly'},
-  {label: 'Ritchey', value: 'Ritchey'},
-];
+interface Bike {
+  id: string;
+  brand: string;
+}
 
 const BicycleSearch = () => {
-  const [options, setOptions] = useState<Array<Option>>([]);
+  const [showDropdown, setShowDropdown] = React.useState(true);
+  const [fetchBikes, {data}] = useLazyQuery(GET_BIKES);
+
+  const options =
+    data && data.bicycles.map((b: Bike) => ({label: b.brand, value: b.id}));
+
+  const debouncedFunction = React.useCallback(debounce(fetchBikes, 250), []);
 
   return (
     <GradientBackground>
@@ -24,13 +29,14 @@ const BicycleSearch = () => {
           <br />
           <TypeaheadInput
             options={options}
-            showDropdown={true}
+            showDropdown={showDropdown}
             onChange={(inputValue: string) => {
-              if (inputValue.length > 5) {
-                setOptions(fakeOptions);
-              } else {
-                setOptions([]);
+              if (inputValue === '') {
+                return setShowDropdown(false);
               }
+
+              setShowDropdown(true);
+              debouncedFunction({variables: {brand: inputValue}});
             }}
             onSelect={(value: Option) => {
               console.log({value});

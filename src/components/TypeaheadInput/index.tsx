@@ -58,6 +58,7 @@ const TypeaheadInput = ({options, showDropdown, onChange, onSelect}: Props) => {
 };
 
 TypeaheadInput.defaultProps = {
+  options: [],
   showDropdown: false,
   onChange: (_inputValue: string) => {},
   onSelect: (_selectedOption: Option) => {},
