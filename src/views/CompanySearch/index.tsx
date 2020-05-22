@@ -1,19 +1,20 @@
 import {useState} from 'react';
+import {useLazyQuery} from '@apollo/react-hooks';
 
+import {ALL_BIKES} from '@utils/queries';
 import TypeaheadInput, {Option} from '@components/TypeaheadInput';
 import {Box, Title, Subtitle, GradientBackground, Container} from './styles';
 
-const fakeOptions: Array<Option> = [
-  {label: 'Bianchi', value: 'Bianchi'},
-  {label: 'Cinelli', value: 'Cinelli'},
-  {label: 'Specialized', value: 'Specialized'},
-  {label: 'Trek', value: 'Trek'},
-  {label: 'Surly', value: 'Surly'},
-  {label: 'Ritchey', value: 'Ritchey'},
-];
-
 const CompanySearch = () => {
-  const [options, setOptions] = useState<Array<Option>>([]);
+  const [showDropdown, setShowDropdown] = useState(false);
+  const [getMatchingBikes, {error, data}] = useLazyQuery(ALL_BIKES);
+
+  if (error) console.error(error);
+
+  const options =
+    data && data.bicycles
+      ? data.bicycles.map((b: any) => ({label: b.brand, value: b.id}))
+      : [];
 
   return (
     <GradientBackground>
@@ -24,12 +25,13 @@ const CompanySearch = () => {
           <br />
           <TypeaheadInput
             options={options}
-            showDropdown={true}
+            showDropdown={showDropdown}
             onChange={(inputValue: string) => {
-              if (inputValue.length > 5) {
-                setOptions(fakeOptions);
+              if (inputValue === '') {
+                setShowDropdown(false);
               } else {
-                setOptions([]);
+                setShowDropdown(true);
+                getMatchingBikes({variables: {brand: inputValue}});
               }
             }}
             onSelect={(value: Option) => {
