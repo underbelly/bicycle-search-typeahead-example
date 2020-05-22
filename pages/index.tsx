@@ -1,8 +1,7 @@
 import React from 'react';
 
-import {withApollo} from '../lib/apollo';
-
 import CompanySearch from '@views/CompanySearch';
+import {withApollo} from '../lib/apollo';
 
 const LandingPage = () => {
   return <CompanySearch />;
