@@ -1,10 +1,10 @@
 import React from 'react';
 
-import CompanySearch from '@views/CompanySearch';
+import BicycleSearch from '@views/BicycleSearch';
 import {withApollo} from '../lib/apollo';
 
 const LandingPage = () => {
-  return <CompanySearch />;
+  return <BicycleSearch />;
 };
 
 export default withApollo({ssr: true})(LandingPage);

@@ -12,7 +12,7 @@ const fakeOptions: Array<Option> = [
   {label: 'Ritchey', value: 'Ritchey'},
 ];
 
-const CompanySearch = () => {
+const BicycleSearch = () => {
   const [options, setOptions] = useState<Array<Option>>([]);
 
   return (
@@ -42,4 +42,4 @@ const CompanySearch = () => {
   );
 };
 
-export default CompanySearch;
+export default BicycleSearch;
